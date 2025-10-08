@@ -1,0 +1,16 @@
+apiVersion: v2
+name: clustereye-api
+description: ClusterEye API - Go-based monitoring backend
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+home: https://github.com/senbaris/clustereye-api
+sources:
+  - https://github.com/senbaris/clustereye-api
+maintainers:
+  - name: ClusterEye Team
+keywords:
+  - api
+  - backend
+  - monitoring
+  - golang

@@ -1,0 +1,39 @@
+# Envoy configuration
+envoy:
+  image:
+    repository: envoyproxy/envoy
+    tag: "v1.31.0"
+    pullPolicy: IfNotPresent
+
+  # Resources
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  # Service configuration
+  service:
+    type: NodePort
+    port: 10000
+    targetPort: 10000
+
+  # Replicas
+  replicas: 2
+
+# Global configuration (will be overridden by parent chart)
+global:
+  domains:
+    frontend: "demoui.clustereye.com"
+    api: "demoapi.clustereye.com"
+
+# Backend services configuration
+backends:
+  frontend:
+    service: "clustereye-clustereye-frontend"
+    port: 80
+  api:
+    service: "clustereye-clustereye-api"
+    port: 8080

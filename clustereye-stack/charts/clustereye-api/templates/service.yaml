@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "clustereye-api.fullname" . }}
+  labels:
+    {{- include "clustereye-api.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.grpcPort }}
+      targetPort: {{ .Values.service.grpcTargetPort }}
+      protocol: TCP
+      name: grpc
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.grpcNodePort }}
+      nodePort: {{ .Values.service.grpcNodePort }}
+      {{- end }}
+  selector:
+    {{- include "clustereye-api.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "clustereye-api.fullname" . }}
+  labels:
+    {{- include "clustereye-api.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "clustereye-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "clustereye-api.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "clustereye-api.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+            - name: grpc
+              containerPort: {{ .Values.service.grpcTargetPort }}
+              protocol: TCP
+          env:
+            {{- if .Values.secret.enabled }}
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "clustereye-api.fullname" . }}-secrets
+                  key: JWT_SECRET_KEY
+            - name: API_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "clustereye-api.fullname" . }}-secrets
+                  key: API_SECRET_KEY
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "clustereye-api.fullname" . }}-secrets
+                  key: ENCRYPTION_KEY
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "clustereye-api.fullname" . }}-secrets
+                  key: DB_PASSWORD
+            - name: INFLUX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "clustereye-api.fullname" . }}-secrets
+                  key: INFLUX_TOKEN
+            {{- end }}
+            # Database configuration
+            - name: DB_HOST
+              value: {{ or .Values.global.database.host .Values.config.database.host "clustereye-postgresql" | quote }}
+            - name: DB_PORT
+              value: {{ or .Values.global.database.port .Values.config.database.port 5432 | quote }}
+            - name: DB_USER
+              value: {{ or .Values.global.database.username .Values.config.database.user "postgres" | quote }}
+            - name: DB_NAME
+              value: {{ or .Values.global.database.database .Values.config.database.dbname "clustereye" | quote }}
+            - name: DB_SSLMODE
+              value: {{ or .Values.global.database.sslMode .Values.config.database.sslmode "disable" | quote }}
+            # InfluxDB configuration
+            - name: INFLUX_URL
+              value: {{ or .Values.global.influxdb.url .Values.config.influxdb.url (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
+            - name: INFLUX_ORG
+              value: {{ or .Values.global.influxdb.organization .Values.config.influxdb.organization "clustereye" | quote }}
+            - name: INFLUX_BUCKET
+              value: {{ or .Values.global.influxdb.bucket .Values.config.influxdb.bucket "clustereye" | quote }}
+          {{- if .Values.configMap.enabled }}
+          volumeMounts:
+            - name: config
+              mountPath: /app/server.yml
+              subPath: server.yml
+              readOnly: true
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.configMap.enabled }}
+      volumes:
+        - name: config
+          configMap:
+            name: baris-config
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

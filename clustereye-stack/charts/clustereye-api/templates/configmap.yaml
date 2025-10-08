@@ -1,0 +1,45 @@
+{{- if .Values.configMap.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: baris-config
+  labels:
+    {{- include "clustereye-api.labels" . | nindent 4 }}
+data:
+  server.yml: |
+    server:
+      name: {{ .Values.config.server.name | quote }}
+
+    grpc:
+      address: :{{ .Values.service.grpcTargetPort }}
+
+    http:
+      address: :{{ .Values.service.targetPort }}
+
+    log:
+      level: {{ .Values.config.log.level | quote }}
+      format: {{ .Values.config.log.format | quote }}
+      output: {{ .Values.config.log.output | quote }}
+      file_path: {{ .Values.config.log.file_path | quote }}
+      max_size: {{ .Values.config.log.max_size }}
+      max_backups: {{ .Values.config.log.max_backups }}
+      max_age: {{ .Values.config.log.max_age }}
+      compress: {{ .Values.config.log.compress }}
+
+    database:
+      host: {{ or .Values.global.database.host .Values.config.database.host "clustereye-postgresql" | quote }}
+      port: {{ or .Values.global.database.port .Values.config.database.port 5432 }}
+      user: {{ or .Values.global.database.username .Values.config.database.user "postgres" | quote }}
+      password: "{{ "{{" }} DB_PASSWORD {{ "}}" }}"  # Will be injected from secret
+      dbname: {{ or .Values.global.database.database .Values.config.database.dbname "clustereye" | quote }}
+      sslmode: {{ or .Values.global.database.sslMode .Values.config.database.sslmode "disable" | quote }}
+
+    influxdb:
+      url: {{ or .Values.global.influxdb.url .Values.config.influxdb.url (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
+      token: "{{ "{{" }} INFLUX_TOKEN {{ "}}" }}"  # Will be injected from secret
+      organization: {{ or .Values.global.influxdb.organization .Values.config.influxdb.organization "clustereye" | quote }}
+      bucket: {{ or .Values.global.influxdb.bucket .Values.config.influxdb.bucket "clustereye" | quote }}
+      enabled: {{ .Values.config.influxdb.enabled }}
+      batch_size: {{ .Values.config.influxdb.batch_size }}
+      flush_interval: {{ .Values.config.influxdb.flush_interval }}
+{{- end }}

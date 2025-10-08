@@ -1,0 +1,44 @@
+1. Get the application URL by running these commands:
+
+{{- if index .Values "clustereye-frontend" "ingress" "enabled" }}
+{{- range $host := index .Values "clustereye-frontend" "ingress" "hosts" }}
+  {{- range .paths }}
+  http{{ if index $.Values "clustereye-frontend" "ingress" "tls" }}s{{ end }}://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- else }}
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name=clustereye-frontend,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:80
+{{- end }}
+
+2. ClusterEye Stack Components Status:
+   - Frontend: {{ if .Values.frontend.enabled }}✓ Enabled{{ else }}✗ Disabled{{ end }}
+   - API: {{ if .Values.api.enabled }}✓ Enabled{{ else }}✗ Disabled{{ end }}
+   - PostgreSQL: {{ if .Values.postgresql.enabled }}✓ Enabled (Internal){{ else if .Values.externalPostgreSQL.enabled }}✓ Enabled (External){{ else }}✗ Disabled{{ end }}
+   - InfluxDB: {{ if .Values.influxdb.enabled }}✓ Enabled (Internal){{ else if .Values.externalInfluxDB.enabled }}✓ Enabled (External){{ else }}✗ Disabled{{ end }}
+
+3. Database Connection Information:
+{{- if .Values.postgresql.enabled }}
+   PostgreSQL (Internal):
+     - Service: {{ .Release.Name }}-postgresql
+     - Port: 5432
+     - Database: {{ .Values.global.database.database }}
+     - Username: {{ .Values.global.database.username }}
+{{- end }}
+
+{{- if .Values.influxdb.enabled }}
+   InfluxDB (Internal):
+     - Service: {{ .Release.Name }}-influxdb
+     - Port: 8086
+     - Organization: {{ .Values.global.influxdb.organization }}
+     - Bucket: {{ .Values.global.influxdb.bucket }}
+{{- end }}
+
+4. To get database credentials:
+{{- if .Values.postgresql.enabled }}
+   kubectl get secret --namespace {{ .Release.Namespace }} {{ .Release.Name }}-postgresql -o jsonpath="{.data.postgres-password}" | base64 --decode
+{{- end }}
+{{- if .Values.influxdb.enabled }}
+   kubectl get secret --namespace {{ .Release.Namespace }} {{ .Release.Name }}-influxdb-auth -o jsonpath="{.data.admin-password}" | base64 --decode
+{{- end }}

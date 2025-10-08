@@ -1,0 +1,72 @@
+# Global configurations
+global:
+  namespace: clustereye
+  storageClass: ""
+  imagePullSecrets: []
+
+  # Global secrets and configurations
+  secrets:
+    jwtSecretKey: "clustereye-jwt-secret-key-2024-production-safe-key"
+    apiSecretKey: "clustereye-api-secret-key-2024-production-safe-key"
+    encryptionKey: "SPLtqEkPfH0OpN5Y6XSWY7E99Dh32YD1"
+
+  # Database credentials (can be overridden by external configs)
+  database:
+    host: "clustereye-postgresql"  # Internal service name
+    port: 5432
+    username: "postgres"
+    password: ""
+    database: "clustereye"
+    sslMode: "disable"
+
+  # InfluxDB credentials (can be overridden by external configs)
+  influxdb:
+    url: "http://clustereye-influxdb:8086"  # Internal service name
+    token: "clustereye-token"
+    organization: "clustereye"
+    bucket: "clustereye"
+
+  # Domain configurations for Envoy routing
+  domains:
+    frontend: "demoui.clustereye.com"
+    api: "demoapi.clustereye.com"
+
+# Component enablement flags
+frontend:
+  enabled: true
+
+api:
+  enabled: true
+
+envoy:
+  enabled: true
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: ""
+    username: "postgres"
+    password: ""
+    database: "clustereye"
+
+# InfluxDB configuration
+influxdb:
+  enabled: true
+
+# External database configurations (when not using included databases)
+externalPostgreSQL:
+  enabled: false
+  host: ""
+  port: 5432
+  username: postgres
+  password: ""
+  database: clustereye
+  sslMode: disable
+
+externalInfluxDB:
+  enabled: false
+  url: ""
+  token: ""
+  organization: ""
+  bucket: ""

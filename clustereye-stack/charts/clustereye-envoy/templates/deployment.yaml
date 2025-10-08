@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "clustereye-envoy.fullname" . }}
+  labels:
+    {{- include "clustereye-envoy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.envoy.replicas }}
+  selector:
+    matchLabels:
+      {{- include "clustereye-envoy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "clustereye-envoy.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: envoy
+        image: "{{ .Values.envoy.image.repository }}:{{ .Values.envoy.image.tag }}"
+        imagePullPolicy: {{ .Values.envoy.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 10000
+          protocol: TCP
+        - name: https
+          containerPort: 10443
+          protocol: TCP
+        - name: admin
+          containerPort: 9901
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.envoy.resources | nindent 10 }}
+        volumeMounts:
+        - name: envoy-config
+          mountPath: /etc/envoy
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: admin
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: admin
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: envoy-config
+        configMap:
+          name: {{ include "clustereye-envoy.fullname" . }}-config
