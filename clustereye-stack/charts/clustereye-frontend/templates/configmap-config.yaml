@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "clustereye-frontend.fullname" . }}-config
+  labels:
+    {{- include "clustereye-frontend.labels" . | nindent 4 }}
+data:
+  config.js: |
+    // Runtime configuration for Clustereye
+    // This file can be overridden during Helm deployment
+    window.CLUSTEREYE_CONFIG = {
+      API_URL: 'http://{{ .Values.global.domains.api }}',
+      APP_NAME: 'Clustereye',
+      VERSION: '{{ .Chart.Version }}',
+      // Add other runtime configs here as needed
+      FEATURES: {
+        AI_ANALYSIS: true,
+        ANOMALY_DETECTION: true,
+        REAL_TIME_MONITORING: true
+      },
+      // Timeout configurations
+      TIMEOUT: {
+        API_REQUEST: 30000,
+        WEBSOCKET: 5000
+      }
+    };

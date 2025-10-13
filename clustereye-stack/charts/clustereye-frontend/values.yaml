@@ -62,6 +62,18 @@ env:
   - name: REACT_APP_ENV
     value: "production"
 
+# Runtime configuration for frontend
+# This will be mounted as config.js in the container
+config:
+  appName: "Clustereye"
+  features:
+    aiAnalysis: true
+    anomalyDetection: true
+    realTimeMonitoring: true
+  timeout:
+    apiRequest: 30000
+    websocket: 5000
+
 configMap:
   enabled: true
   data: {}

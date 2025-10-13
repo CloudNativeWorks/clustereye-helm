@@ -15,7 +15,7 @@ global:
     host: "clustereye-postgresql"  # Internal service name
     port: 5432
     username: "postgres"
-    password: ""
+    password: "Dkjf334utre1"
     database: "clustereye"
     sslMode: "disable"
 
@@ -45,9 +45,9 @@ envoy:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: ""
+    postgresPassword: "Dkjf334utre1"
     username: "postgres"
-    password: ""
+    password: "Dkjf334utre1"
     database: "clustereye"
 
 # InfluxDB configuration
