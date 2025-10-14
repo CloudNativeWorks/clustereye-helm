@@ -28,8 +28,8 @@ global:
 
   # Domain configurations for Envoy routing
   domains:
-    frontend: "demoui.clustereye.com"
-    api: "demoapi.clustereye.com"
+    frontend: "10.34.100.114:30000"
+    api: "10.34.100.114:30001"
 
 # Component enablement flags
 frontend:
