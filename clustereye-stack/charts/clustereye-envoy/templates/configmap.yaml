@@ -60,7 +60,7 @@ data:
                 virtual_hosts:
                 - name: frontend_service
                   domains:
-                  - "*"
+                  - "demoui.clustereye.com"
                   routes:
                   - match:
                       prefix: "/"
@@ -79,7 +79,7 @@ data:
                         expose_headers: "*"
                 - name: api_service
                   domains:
-                  - "{{ .Values.global.domains.api }}"
+                  - "*"
                   routes:
                   - match:
                       prefix: "/"
