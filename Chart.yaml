@@ -29,9 +29,9 @@ dependencies:
     version: "0.1.0"
     repository: "file://./charts/clustereye-envoy"
     condition: envoy.enabled
-  - name: postgresql
-    version: "16.7.27"
-    repository: "https://charts.bitnami.com/bitnami"
+  - name: clustereye-postgresql
+    version: "1.0.0"
+    repository: "file://./charts/clustereye-postgresql"
     condition: postgresql.enabled
   - name: influxdb
     version: "4.12.5"

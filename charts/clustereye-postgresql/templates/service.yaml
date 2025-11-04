@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "clustereye-postgresql.fullname" . }}
+  labels:
+    {{- include "clustereye-postgresql.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - name: postgresql
+    port: {{ .Values.service.port }}
+    targetPort: postgresql
+    protocol: TCP
+  selector:
+    {{- include "clustereye-postgresql.selectorLabels" . | nindent 4 }}
