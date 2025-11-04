@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "clustereye-postgresql.fullname" . }}
+  name: clustereye-postgresql
   labels:
     {{- include "clustereye-postgresql.labels" . | nindent 4 }}
 spec:

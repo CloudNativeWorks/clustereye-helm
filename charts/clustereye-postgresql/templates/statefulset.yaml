@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "clustereye-postgresql.fullname" . }}
+  name: clustereye-postgresql
   labels:
     {{- include "clustereye-postgresql.labels" . | nindent 4 }}
 spec:
-  serviceName: {{ include "clustereye-postgresql.fullname" . }}
+  serviceName: clustereye-postgresql
   replicas: 1
   selector:
     matchLabels:
