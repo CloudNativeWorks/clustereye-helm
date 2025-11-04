@@ -9,7 +9,7 @@ data:
     // Runtime configuration for Clustereye
     // This file can be overridden during Helm deployment
     window.CLUSTEREYE_CONFIG = {
-      API_URL: 'https://{{ .Values.global.domains.api }}',
+      API_URL: '{{ if .Values.global.ssl.enabled }}https{{ else }}http{{ end }}://{{ .Values.global.domains.api }}',
       APP_NAME: 'Clustereye',
       VERSION: '{{ .Chart.Version }}',
       // Add other runtime configs here as needed

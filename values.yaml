@@ -34,6 +34,10 @@ global:
     frontend: "demoui.clustereye.com"
     api: "demoapi.clustereye.com"
 
+  # SSL configuration
+  ssl:
+    enabled: true  # Set to false to use http instead of https
+
 # Component enablement flags
 frontend:
   enabled: true
