@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: baris-config
+  name: {{ include "clustereye-api.fullname" . }}-config
   labels:
     {{- include "clustereye-api.labels" . | nindent 4 }}
 data:
@@ -27,18 +27,18 @@ data:
       compress: {{ .Values.config.log.compress }}
 
     database:
-      host: {{ or .Values.global.database.host .Values.config.database.host "clustereye-postgresql" | quote }}
-      port: {{ or .Values.global.database.port .Values.config.database.port 5432 }}
-      user: {{ or .Values.global.database.username .Values.config.database.user "postgres" | quote }}
+      host: {{ .Values.global.database.host | default "clustereye-postgresql" | quote }}
+      port: {{ .Values.global.database.port | default 5432 }}
+      user: {{ .Values.global.database.username | default "postgres" | quote }}
       password: "{{ "{{" }} DB_PASSWORD {{ "}}" }}"  # Will be injected from secret
-      dbname: {{ or .Values.global.database.database .Values.config.database.dbname "clustereye" | quote }}
-      sslmode: {{ or .Values.global.database.sslMode .Values.config.database.sslmode "disable" | quote }}
+      dbname: {{ .Values.global.database.database | default "clustereye" | quote }}
+      sslmode: {{ .Values.global.database.sslMode | default "disable" | quote }}
 
     influxdb:
-      url: {{ or .Values.global.influxdb.url .Values.config.influxdb.url (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
+      url: {{ .Values.global.influxdb.url | default (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
       token: "{{ "{{" }} INFLUX_TOKEN {{ "}}" }}"  # Will be injected from secret
-      organization: {{ or .Values.global.influxdb.organization .Values.config.influxdb.organization "clustereye" | quote }}
-      bucket: {{ or .Values.global.influxdb.bucket .Values.config.influxdb.bucket "clustereye" | quote }}
+      organization: {{ .Values.global.influxdb.organization | default "clustereye" | quote }}
+      bucket: {{ .Values.global.influxdb.bucket | default "clustereye" | quote }}
       enabled: {{ .Values.config.influxdb.enabled }}
       batch_size: {{ .Values.config.influxdb.batch_size }}
       flush_interval: {{ .Values.config.influxdb.flush_interval }}

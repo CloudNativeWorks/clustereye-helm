@@ -1,0 +1,21 @@
+# Helm packaged charts
+*.tgz
+
+# Local values files with secrets
+values-local.yaml
+values-*.local.yaml
+
+# Temporary files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Build artifacts
+.deploy/
+.gh-pages/

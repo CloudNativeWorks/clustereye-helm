@@ -1,0 +1,38 @@
+# Example values file with sample secrets for development
+# Copy this file to values-local.yaml and update with your actual values
+# NEVER commit values-local.yaml to version control!
+
+global:
+  namespace: clustereye
+
+  secrets:
+    jwtSecretKey: "your-jwt-secret-key-here-min-32-chars"
+    apiSecretKey: "your-api-secret-key-here-min-32-chars"
+    encryptionKey: "your-encryption-key-32-chars-exactly"
+
+  database:
+    host: "clustereye-postgresql"
+    port: 5432
+    username: "postgres"
+    password: "your-secure-database-password"
+    database: "clustereye"
+    sslMode: "disable"
+
+  influxdb:
+    url: "http://clustereye-influxdb:8086"
+    token: "your-influxdb-admin-token"
+    organization: "clustereye"
+    bucket: "clustereye"
+
+  domains:
+    frontend: "ui.example.com"
+    api: "api.example.com"
+
+# For production deployments, use:
+# helm install clustereye . -f values-local.yaml
+# or
+# helm install clustereye . \
+#   --set global.secrets.jwtSecretKey=xxx \
+#   --set global.secrets.apiSecretKey=xxx \
+#   --set global.database.password=xxx \
+#   --set global.influxdb.token=xxx

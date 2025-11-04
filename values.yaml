@@ -5,24 +5,27 @@ global:
   imagePullSecrets: []
 
   # Global secrets and configurations
+  # WARNING: Never commit real secrets to version control!
+  # These are example values for development only.
+  # For production, override these values using --set or a separate values file.
   secrets:
-    jwtSecretKey: "clustereye-jwt-secret-key-2024-production-safe-key"
-    apiSecretKey: "clustereye-api-secret-key-2024-production-safe-key"
-    encryptionKey: "SPLtqEkPfH0OpN5Y6XSWY7E99Dh32YD1"
+    jwtSecretKey: ""  # Set via: --set global.secrets.jwtSecretKey=YOUR_SECRET
+    apiSecretKey: ""  # Set via: --set global.secrets.apiSecretKey=YOUR_SECRET
+    encryptionKey: ""  # Set via: --set global.secrets.encryptionKey=YOUR_SECRET
 
   # Database credentials (can be overridden by external configs)
   database:
     host: "clustereye-postgresql"  # Internal service name
     port: 5432
     username: "postgres"
-    password: "Dkjf334utre1"
+    password: ""  # Set via: --set global.database.password=YOUR_PASSWORD
     database: "clustereye"
     sslMode: "disable"
 
   # InfluxDB credentials (can be overridden by external configs)
   influxdb:
     url: "http://clustereye-influxdb:8086"  # Internal service name
-    token: "clustereye-token"
+    token: ""  # Set via: --set global.influxdb.token=YOUR_TOKEN
     organization: "clustereye"
     bucket: "clustereye"
 
@@ -45,10 +48,10 @@ envoy:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "Dkjf334utre1"
     username: "postgres"
-    password: "Dkjf334utre1"
     database: "clustereye"
+    # Password is managed via global.database.password
+    # The postgresql chart will use existingSecret if provided
 
 # InfluxDB configuration
 influxdb:

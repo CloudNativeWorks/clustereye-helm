@@ -61,19 +61,8 @@ config:
     max_age: 30
     compress: true
 
-  database:
-    host: ""  # Will use global.database.host or fallback
-    port: 5432
-    user: ""  # Will use global.database.username or fallback
-    password: ""  # Will use global.database.password or fallback
-    dbname: ""  # Will use global.database.database or fallback
-    sslmode: ""  # Will use global.database.sslMode or fallback
-
+  # Database and InfluxDB settings - managed via global values
   influxdb:
-    url: ""  # Will use global.influxdb.url or fallback
-    token: ""  # Will use global.influxdb.token or fallback
-    organization: ""  # Will use global.influxdb.organization or fallback
-    bucket: ""  # Will use global.influxdb.bucket or fallback
     enabled: true
     batch_size: 1000
     flush_interval: 10

@@ -23,12 +23,6 @@ envoy:
   # Replicas
   replicas: 2
 
-# Global configuration (will be overridden by parent chart)
-global:
-  domains:
-    frontend: "demoui.clustereye.com"
-    api: "demoapi.clustereye.com"
-
 # Backend services configuration
 backends:
   frontend:

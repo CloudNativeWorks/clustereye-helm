@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClusterEye Helm Charts</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #3498db;
+            color: white;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ClusterEye Helm Charts <span class="badge">v1.0.0</span></h1>
+
+    <p>Kubernetes monitoring and analytics platform with AI-powered insights.</p>
+
+    <h2>Quick Start</h2>
+
+    <h3>Add Helm Repository</h3>
+    <pre><code>helm repo add clustereye https://charts.clustereye.io
+helm repo update</code></pre>
+
+    <h3>Install ClusterEye Stack</h3>
+    <pre><code>helm install my-clustereye clustereye/clustereye-stack</code></pre>
+
+    <h3>Install with Custom Values</h3>
+    <pre><code>helm install my-clustereye clustereye/clustereye-stack \
+  --set global.domains.frontend=ui.example.com \
+  --set global.domains.api=api.example.com</code></pre>
+
+    <h2>Available Charts</h2>
+    <ul>
+        <li><strong>clustereye-stack</strong> - Complete monitoring stack (API, Frontend, Envoy, PostgreSQL, InfluxDB)</li>
+    </ul>
+
+    <h2>Configuration</h2>
+    <p>See the <a href="https://github.com/yourusername/clustereye-helm">GitHub repository</a> for detailed configuration options.</p>
+
+    <h2>Components</h2>
+    <ul>
+        <li><strong>ClusterEye API</strong> - REST and gRPC API server</li>
+        <li><strong>ClusterEye Frontend</strong> - React-based UI</li>
+        <li><strong>Envoy Proxy</strong> - Intelligent routing with CORS support</li>
+        <li><strong>PostgreSQL</strong> - Metadata storage</li>
+        <li><strong>InfluxDB</strong> - Time-series metrics storage</li>
+    </ul>
+
+    <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; color: #666;">
+        <p>ClusterEye - Cloud Native Monitoring Platform</p>
+    </footer>
+</body>
+</html>

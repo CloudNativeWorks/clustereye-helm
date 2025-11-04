@@ -99,7 +99,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: baris-config
+            name: {{ include "clustereye-api.fullname" . }}-config
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
