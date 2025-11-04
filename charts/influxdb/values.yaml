@@ -2,7 +2,7 @@
 ## ref: https://hub.docker.com/r/library/influxdb/tags/
 image:
   repository: "influxdb"
-  tag: "1.8.10-alpine"
+  tag: "2.7-alpine"
   pullPolicy: IfNotPresent
   ## If specified, use these secrets to access the images
   # pullSecrets:
@@ -189,9 +189,19 @@ tolerations: []
 ## The InfluxDB image uses several environment variables to automatically
 ## configure certain parts of the server.
 ## Ref: https://hub.docker.com/_/influxdb/
-env: {}
-  # - name: INFLUXDB_DB
-  #   value: "demo"
+env:
+  - name: DOCKER_INFLUXDB_INIT_MODE
+    value: "setup"
+  - name: DOCKER_INFLUXDB_INIT_USERNAME
+    value: "admin"
+  - name: DOCKER_INFLUXDB_INIT_PASSWORD
+    value: "clustereye-password"
+  - name: DOCKER_INFLUXDB_INIT_ORG
+    value: "clustereye"
+  - name: DOCKER_INFLUXDB_INIT_BUCKET
+    value: "clustereye"
+  - name: DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
+    value: "clustereye-token"
 
 ## The name of a secret in the same kubernetes namespace which contain values
 ## to be added to the environment.

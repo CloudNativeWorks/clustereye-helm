@@ -25,7 +25,7 @@ global:
   # InfluxDB credentials (can be overridden by external configs)
   influxdb:
     url: "http://clustereye-influxdb:8086"  # Internal service name
-    token: ""  # Set via: --set global.influxdb.token=YOUR_TOKEN
+    token: "clustereye-token"  # Set via: --set global.influxdb.token=YOUR_TOKEN
     organization: "clustereye"
     bucket: "clustereye"
 
