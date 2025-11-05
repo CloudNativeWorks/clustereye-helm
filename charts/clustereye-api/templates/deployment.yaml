@@ -62,7 +62,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "clustereye-api.fullname" . }}-secrets
                   key: DB_PASSWORD
-            - name: INFLUX_TOKEN
+            - name: INFLUXDB_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "clustereye-api.fullname" . }}-secrets
