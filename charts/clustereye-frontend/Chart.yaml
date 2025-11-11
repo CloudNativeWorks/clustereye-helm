@@ -4,9 +4,9 @@ description: ClusterEye Frontend - React-based monitoring dashboard
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
-home: https://github.com/senbaris/clustereye
+home: https://github.com/CloudNativeWorks/clustereye/
 sources:
-  - https://github.com/senbaris/clustereye
+  - https://github.com/CloudNativeWorks/clustereye/
 maintainers:
   - name: ClusterEye Team
 keywords:

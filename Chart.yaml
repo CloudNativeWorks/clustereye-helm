@@ -4,10 +4,10 @@ description: A Helm chart for ClusterEye monitoring stack including frontend, AP
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
-home: https://github.com/senbaris/clustereye
+home: https://github.com/CloudNativeWorks/clustereye/
 sources:
-  - https://github.com/senbaris/clustereye
-  - https://github.com/senbaris/clustereye-api
+  - https://github.com/CloudNativeWorks/clustereye/
+  - https://github.com/CloudNativeWorks/clustereye-api/
 maintainers:
   - name: ClusterEye Team
 keywords:
