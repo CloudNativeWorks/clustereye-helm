@@ -18,7 +18,7 @@ global:
     host: "clustereye-postgresql"  # Internal service name
     port: 5432
     username: "postgres"
-    password: ""  # PostgreSQL password
+    password: "write-your-secure-pass"  # PostgreSQL password
     database: "clustereye"
     sslMode: "disable"
 
