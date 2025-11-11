@@ -80,7 +80,7 @@ jobs:
       run: |
         # Try to download existing index.yaml from GitHub Pages with retry
         for i in {1..3}; do
-          if curl -f -s -o .gh-pages/index.yaml https://charts.clustereye.io/index.yaml; then
+          if curl -f -s -o .gh-pages/index.yaml https://charts.clustereye.com/index.yaml; then
             echo "Successfully downloaded existing index.yaml"
             break
           else
@@ -100,8 +100,8 @@ jobs:
         if [ -f .gh-pages/index.yaml ]; then
           echo "Downloading existing chart packages..."
           # Extract chart URLs from existing index.yaml and download them
-          if grep -q 'https://charts\.clustereye\.io/[^"]*\.tgz' .gh-pages/index.yaml; then
-            grep -o 'https://charts\.clustereye\.io/[^"]*\.tgz' .gh-pages/index.yaml | sort -u | while read url; do
+          if grep -q 'https://charts\.clustereye\.com/[^"]*\.tgz' .gh-pages/index.yaml; then
+            grep -o 'https://charts\.clustereye\.com/[^"]*\.tgz' .gh-pages/index.yaml | sort -u | while read url; do
               filename=$(basename "$url")
               echo "Downloading $filename..."
               for attempt in {1..2}; do
@@ -131,12 +131,12 @@ jobs:
         cp .deploy/*.tgz .gh-pages/
         cp artifacthub-repo.yml .gh-pages/ 2>/dev/null || true
         touch .gh-pages/.nojekyll
-        echo "charts.clustereye.io" > .gh-pages/CNAME
+        echo "charts.clustereye.com" > .gh-pages/CNAME
         # Remove README files that interfere with index.yaml
         rm -f .gh-pages/README.md .gh-pages/CLAUDE.md
         # Generate/update index.yaml (replaces existing)
         echo "Generating index.yaml..."
-        helm repo index .gh-pages --url https://charts.clustereye.io
+        helm repo index .gh-pages --url https://charts.clustereye.com
 
     - name: Setup Pages
       if: steps.version_check.outputs.version_changed == 'true'
