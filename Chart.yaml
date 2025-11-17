@@ -2,7 +2,7 @@ apiVersion: v2
 name: clustereye-stack
 description: A Helm chart for ClusterEye monitoring stack including frontend, API, PostgreSQL, and InfluxDB
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "1.0.0"
 home: https://github.com/CloudNativeWorks/clustereye/
 sources:
