@@ -8,14 +8,10 @@ keywords:
 - timeseries
 - influxdata
 maintainers:
-- email: rawkode@influxdata.com
-  name: rawkode
-- email: giacomo@influxdata.com
-  name: gitirabassi
-- email: urakiny@gmail.com
-  name: aisuko
-- email: naseem@transit.app
-  name: naseemkullah
+- email: johnblack@cloudnativeworks.com
+  name: johnblack
+- email: johnbrown@cloudnativeworks.com
+  name: johnbrown
 name: influxdb
 sources:
 - https://github.com/influxdata/influxdb

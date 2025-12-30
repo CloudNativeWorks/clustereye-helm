@@ -86,6 +86,12 @@ spec:
               value: {{ or .Values.global.influxdb.organization .Values.config.influxdb.organization "clustereye" | quote }}
             - name: INFLUX_BUCKET
               value: {{ or .Values.global.influxdb.bucket .Values.config.influxdb.bucket "clustereye" | quote }}
+          {{- if .Values.config.ai.enabled }}
+          # AI Features Configuration
+          envFrom:
+            - configMapRef:
+                name: {{ include "clustereye-api.fullname" . }}-ai-config
+          {{- end }}
           {{- if .Values.configMap.enabled }}
           volumeMounts:
             - name: config

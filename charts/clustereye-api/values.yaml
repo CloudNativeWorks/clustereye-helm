@@ -67,6 +67,15 @@ config:
     batch_size: 1000
     flush_interval: 10
 
+  # AI Features Configuration
+  # Set enabled: true to activate AI-powered analysis features
+  # Note: This will enable AI caching, auto-triggers, and queue processing
+  # Estimated cost: ~$5-15/month per customer with AI enabled
+  ai:
+    enabled: false  # Default: disabled for cost control
+    endpoint: "https://o4szcpxekyj6hvcdx5ktqy2c.agents.do-ai.run/api/v1/chat/completions"
+    token: "cifsE4HtBVWFEzyXrh5E5vbU-v66wK6I"
+
 configMap:
   enabled: true
 

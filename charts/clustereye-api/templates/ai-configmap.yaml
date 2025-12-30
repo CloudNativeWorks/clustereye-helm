@@ -1,0 +1,22 @@
+{{- if .Values.config.ai.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "clustereye-api.fullname" . }}-ai-config
+  labels:
+    {{- include "clustereye-api.labels" . | nindent 4 }}
+    component: ai
+data:
+  # Enable AI Features
+  ENABLE_AI_FEATURES: "true"
+
+  # AI Service Configuration
+  AI_ENDPOINT: {{ .Values.config.ai.endpoint | quote }}
+  AI_TOKEN: {{ .Values.config.ai.token | quote }}
+
+  # Optional: Advanced AI Configuration
+  # AI_CACHE_MAX_SIZE: "100"
+  # AI_CACHE_TTL_HOURS: "24"
+  # AI_REQUEST_PROCESSOR_INTERVAL: "30s"
+  # AI_THRESHOLD_MONITOR_INTERVAL: "5m"
+{{- end }}
