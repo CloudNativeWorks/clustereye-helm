@@ -664,7 +664,7 @@ install_clustereye_stack() {
 
     log_info "Installing ClusterEye stack..."
 
-    helm install "$HELM_CHART_NAME" "${HELM_REPO_NAME}/${HELM_CHART_NAME}" \
+    helm install clustereye "${HELM_REPO_NAME}/${HELM_CHART_NAME}" \
         --namespace "$CLUSTER_NAMESPACE" \
         --create-namespace \
         --set global.domains.frontend="$FRONTEND_DOMAIN" \

@@ -60,7 +60,7 @@ postgresql:
 # InfluxDB configuration
 influxdb:
   enabled: true
-  fullnameOverride: "clustereye-influxdb"
+
 
 # External database configurations (when not using included databases)
 externalPostgreSQL:
