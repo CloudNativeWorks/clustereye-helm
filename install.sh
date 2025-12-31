@@ -552,16 +552,8 @@ nodes:
 - role: control-plane
   extraPortMappings:
   # HTTP port for Envoy
-  - containerPort: 80
-    hostPort: 80
-    protocol: TCP
-  # HTTPS port for Envoy
-  - containerPort: 443
-    hostPort: 443
-    protocol: TCP
-  # gRPC port for agents
-  - containerPort: 50051
-    hostPort: 50051
+  - containerPort: 30000
+    hostPort: 30000
     protocol: TCP
   kubeadmConfigPatches:
   - |
