@@ -3,7 +3,7 @@ replicaCount: 2
 image:
   repository: johnblack77/clustereye
   pullPolicy: Always
-  tag: "v1.0.0-amd64"
+  tag: "latest-amd64"
 
 imagePullSecrets: []
 nameOverride: ""

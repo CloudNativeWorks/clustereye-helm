@@ -80,12 +80,21 @@ spec:
             - name: DB_SSLMODE
               value: {{ or .Values.global.database.sslMode .Values.config.database.sslmode "disable" | quote }}
             # InfluxDB configuration
+            {{- if .Values.global.externalInfluxDB.enabled }}
+            - name: INFLUX_URL
+              value: {{ .Values.global.externalInfluxDB.url | quote }}
+            - name: INFLUX_ORG
+              value: {{ .Values.global.externalInfluxDB.organization | quote }}
+            - name: INFLUX_BUCKET
+              value: {{ .Values.global.externalInfluxDB.bucket | quote }}
+            {{- else }}
             - name: INFLUX_URL
               value: {{ or .Values.global.influxdb.url .Values.config.influxdb.url (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
             - name: INFLUX_ORG
               value: {{ or .Values.global.influxdb.organization .Values.config.influxdb.organization "clustereye" | quote }}
             - name: INFLUX_BUCKET
               value: {{ or .Values.global.influxdb.bucket .Values.config.influxdb.bucket "clustereye" | quote }}
+            {{- end }}
           {{- if .Values.config.ai.enabled }}
           # AI Features Configuration
           envFrom:

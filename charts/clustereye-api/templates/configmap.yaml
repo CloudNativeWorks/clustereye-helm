@@ -35,10 +35,17 @@ data:
       sslmode: {{ .Values.global.database.sslMode | default "disable" | quote }}
 
     influxdb:
+      {{- if .Values.global.externalInfluxDB.enabled }}
+      url: {{ .Values.global.externalInfluxDB.url | quote }}
+      token: "{{ "{{" }} INFLUX_TOKEN {{ "}}" }}"  # Will be injected from secret
+      organization: {{ .Values.global.externalInfluxDB.organization | quote }}
+      bucket: {{ .Values.global.externalInfluxDB.bucket | quote }}
+      {{- else }}
       url: {{ .Values.global.influxdb.url | default (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
       token: "{{ "{{" }} INFLUX_TOKEN {{ "}}" }}"  # Will be injected from secret
       organization: {{ .Values.global.influxdb.organization | default "clustereye" | quote }}
       bucket: {{ .Values.global.influxdb.bucket | default "clustereye" | quote }}
+      {{- end }}
       enabled: {{ .Values.config.influxdb.enabled }}
       batch_size: {{ .Values.config.influxdb.batch_size }}
       flush_interval: {{ .Values.config.influxdb.flush_interval }}

@@ -22,12 +22,21 @@ global:
     database: "clustereye"
     sslMode: "disable"
 
-  # InfluxDB credentials (can be overridden by external configs)
+  # InfluxDB credentials (for internal InfluxDB)
   influxdb:
     url: "http://clustereye-influxdb:8086"  # Internal service name
     token: "clustereye-token"  # Set via: --set global.influxdb.token=YOUR_TOKEN
     organization: "clustereye"
     bucket: "clustereye"
+
+  # External InfluxDB configuration (when not using included InfluxDB)
+  # Set influxdb.enabled=false and externalInfluxDB.enabled=true to use external InfluxDB
+  externalInfluxDB:
+    enabled: false
+    url: ""        # e.g., "https://my-influx.example.com:8086"
+    token: ""      # External InfluxDB API token
+    organization: ""
+    bucket: ""
 
   # Domain configurations for Envoy routing
   domains:
@@ -72,6 +81,8 @@ externalPostgreSQL:
   database: clustereye
   sslMode: disable
 
+# DEPRECATED: Use global.externalInfluxDB instead
+# Kept for backwards compatibility
 externalInfluxDB:
   enabled: false
   url: ""
