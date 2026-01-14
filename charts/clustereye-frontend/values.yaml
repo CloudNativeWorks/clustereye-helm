@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: johnblack77/clustereye
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   tag: "latest-amd64"
 
 imagePullSecrets: []
