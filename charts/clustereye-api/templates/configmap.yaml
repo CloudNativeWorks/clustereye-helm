@@ -49,4 +49,8 @@ data:
       enabled: {{ .Values.config.influxdb.enabled }}
       batch_size: {{ .Values.config.influxdb.batch_size }}
       flush_interval: {{ .Values.config.influxdb.flush_interval }}
+
+    ai:
+      endpoint: {{ .Values.config.ai.endpoint | quote }}
+      token: {{ .Values.config.ai.token | quote }}
 {{- end }}
