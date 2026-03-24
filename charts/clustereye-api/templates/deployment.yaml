@@ -62,7 +62,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "clustereye-api.fullname" . }}-secrets
                   key: DB_PASSWORD
-            - name: INFLUX_TOKEN
+            - name: INFLUXDB_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "clustereye-api.fullname" . }}-secrets
@@ -80,19 +80,21 @@ spec:
             - name: DB_SSLMODE
               value: {{ or .Values.global.database.sslMode .Values.config.database.sslmode "disable" | quote }}
             # InfluxDB configuration
+            - name: INFLUXDB_ENABLED
+              value: {{ .Values.config.influxdb.enabled | quote }}
             {{- if .Values.global.externalInfluxDB.enabled }}
-            - name: INFLUX_URL
+            - name: INFLUXDB_URL
               value: {{ .Values.global.externalInfluxDB.url | quote }}
-            - name: INFLUX_ORG
+            - name: INFLUXDB_ORG
               value: {{ .Values.global.externalInfluxDB.organization | quote }}
-            - name: INFLUX_BUCKET
+            - name: INFLUXDB_BUCKET
               value: {{ .Values.global.externalInfluxDB.bucket | quote }}
             {{- else }}
-            - name: INFLUX_URL
+            - name: INFLUXDB_URL
               value: {{ or .Values.global.influxdb.url .Values.config.influxdb.url (printf "http://%s-influxdb:8086" .Release.Name) | quote }}
-            - name: INFLUX_ORG
+            - name: INFLUXDB_ORG
               value: {{ or .Values.global.influxdb.organization .Values.config.influxdb.organization "clustereye" | quote }}
-            - name: INFLUX_BUCKET
+            - name: INFLUXDB_BUCKET
               value: {{ or .Values.global.influxdb.bucket .Values.config.influxdb.bucket "clustereye" | quote }}
             {{- end }}
           {{- if .Values.config.ai.enabled }}
