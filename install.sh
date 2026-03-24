@@ -685,7 +685,7 @@ install_clustereye_stack() {
     local jwt_secret=$(generate_password 32)
     local api_secret=$(generate_password 32)
     local encryption_key=$(generate_password 32)
-    local influx_token=$(generate_password 32)
+    local influx_token="clustereye-token"
 
     local protocol="http"
     if [ "$SSL_ENABLED" = "true" ]; then
