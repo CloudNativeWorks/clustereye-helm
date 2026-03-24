@@ -200,6 +200,8 @@ env:
     value: "clustereye"
   - name: DOCKER_INFLUXDB_INIT_BUCKET
     value: "clustereye"
+  - name: DOCKER_INFLUXDB_INIT_RETENTION
+    value: "72h"
   - name: DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
     value: "clustereye-token"
 
